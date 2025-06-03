@@ -38,7 +38,7 @@ function Home() {
   const fetchExpenses = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/expenses`,
+        `${import.meta.env.VITE_API_URL}/api/expenses`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
