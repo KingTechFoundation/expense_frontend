@@ -55,7 +55,7 @@ function EditExpenseModal({ isOpen, onClose, expense, onSuccess, token }) {
 
     try {
       await axios.put(
-        `${import.meta.env.VITE_API_URL}/expenses/${expense._id}`,
+        `${import.meta.env.VITE_API_URL}/api/expenses/${expense._id}`,
         formData,
         {
           headers: { Authorization: `Bearer ${token}` },

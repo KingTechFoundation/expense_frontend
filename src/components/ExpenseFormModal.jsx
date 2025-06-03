@@ -44,7 +44,7 @@ function ExpenseFormModal({ isOpen, onClose, onSuccess, token }) {
     }
 
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/expenses`, formData, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/expenses`, formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setFormData({
