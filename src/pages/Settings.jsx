@@ -52,7 +52,7 @@ function Settings() {
     if (!window.confirm('Are you sure you want to delete this expense?'))
       return;
     try {
-      await axios.delete(`${import.meta.env.VITE_API_URL}/api//expenses/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/api/expenses/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchExpenses();
