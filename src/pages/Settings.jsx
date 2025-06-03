@@ -24,7 +24,7 @@ function Settings() {
   const fetchExpenses = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/expenses`,
+        `${import.meta.env.VITE_API_URL}/api/expenses`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -52,7 +52,7 @@ function Settings() {
     if (!window.confirm('Are you sure you want to delete this expense?'))
       return;
     try {
-      await axios.delete(`${import.meta.env.VITE_API_URL}/expenses/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/api//expenses/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchExpenses();
