@@ -96,42 +96,70 @@ function Home() {
     generateDailyPDF(filteredExpenses, dailyTotal);
   };
 
+  // Format amount with commas and RWF
+  const formatAmount = (amount) => {
+    return `RWF ${amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
+  };
+
   return (
-    <div className='container mx-auto p-4'>
-      <h1 className='text-3xl font-bold mb-6'>Expense Tracker</h1>
-      <div className='mb-4'>
-        <button
-          onClick={handleAddExpense}
-          className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mr-2'
-        >
-          Add Expense
-        </button>
-        <button
-          onClick={handleTestDailyPDF}
-          className='bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600'
-        >
-          Test Daily PDF
-        </button>
+    <div className='container mx-auto p-4 font-sans'>
+      <div className='flex flex-col md:flex-row md:items-start'>
+        <div className='flex-1'>
+          <h1 className='text-3xl font-bold mb-6 text-gray-800'>
+            Expense Tracker
+          </h1>
+          <div className='mb-4 flex flex-col sm:flex-row sm:gap-4'>
+            <button
+              onClick={handleAddExpense}
+              className='bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition mb-2 sm:mb-0'
+            >
+              Add Expense
+            </button>
+            <button
+              onClick={handleTestDailyPDF}
+              className='bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition'
+            >
+              Test Daily PDF
+            </button>
+          </div>
+          <FilterForm
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            startDate={startDate}
+            setStartDate={setStartDate}
+            endDate={endDate}
+            setEndDate={setEndDate}
+            handleGeneratePDF={handleGeneratePDF}
+          />
+          <ExpenseTable
+            expenses={filteredExpenses.filter(
+              (expense) =>
+                new Date(expense.date).toISOString().split('T')[0] === today
+            )}
+          />
+        </div>
+        <div className='mt-6 md:mt-0 md:ml-6 w-full md:w-80'>
+          <div className='bg-white shadow-lg rounded-lg p-6 border border-gray-200'>
+            <h2 className='text-lg font-semibold text-gray-800 mb-4'>
+              Summary
+            </h2>
+            <div className='space-y-3'>
+              <div className='flex justify-between items-center'>
+                <span className='text-lg text-gray-600'>Total Expenses</span>
+                <span className='text-xl font-semibold text-blue-600'>
+                  {formatAmount(totalExpenses)}
+                </span>
+              </div>
+              <div className='flex justify-between items-center'>
+                <span className='text-lg text-gray-600'>Today's Total</span>
+                <span className='text-xl font-semibold text-blue-600'>
+                  {formatAmount(dailyTotal)}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <FilterForm
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        startDate={startDate}
-        setStartDate={setStartDate}
-        endDate={endDate}
-        setEndDate={setEndDate}
-        handleGeneratePDF={handleGeneratePDF}
-      />
-      <div className='mb-4'>
-        <p className='text-lg'>Total Expenses: ${totalExpenses.toFixed(2)}</p>
-        <p className='text-lg'>Today's Total: ${dailyTotal.toFixed(2)}</p>
-      </div>
-      <ExpenseTable
-        expenses={filteredExpenses.filter(
-          (expense) =>
-            new Date(expense.date).toISOString().split('T')[0] === today
-        )}
-      />
       <ExpenseFormModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
